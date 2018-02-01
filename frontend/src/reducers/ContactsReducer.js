@@ -40,6 +40,12 @@ const dataSort = (data, asc, column) => {
     case SortColumns.NAME:
       sortedData = data.sort((a, b) => { return a.name.toLowerCase() < b.name.toLowerCase() });
       break;
+      case SortColumns.LASTNAME:
+          sortedData = data.sort((a, b) => { return a.lastname.toLowerCase() < b.lastname.toLowerCase() });
+          break;
+      case SortColumns.DOB:
+          sortedData = data.sort((a, b) => { return a.DOB < b.DOB });
+          break;
     case SortColumns.ID:
     default:
       sortedData = data.sort((a, b) => { return a.id - b.id; });
@@ -75,14 +81,16 @@ const manipulateData = (state, action) => {
         error: action.payload
       }
     case types.ADD_CONTACT:
-        state.data = dataSort([...state.data, new Contact(action.payload.id,action.payload.name,action.payload.phonenumber)], state.sorting.asc, state.sorting.column);
+        state.data = dataSort([...state.data, new Contact(action.payload.id,action.payload.name,action.payload.lastname,action.payload.DOB,action.payload.phonenumber)], state.sorting.asc, state.sorting.column);
         if(state.searched)
           state.searchedData = filterSearchResult(state.data, state.searchParam);
       return {
         ...state,
         input: {
           name: "",
-          phonenumber: ""
+            lastname: "",
+            DOB: "",
+            phonenumber: ""
         }
       };
     case types.REMOVE_CONTACT:
@@ -127,6 +135,34 @@ const manipulateData = (state, action) => {
         ...state,
         input: { ...state.input, name: action.payload.value }
       };
+      case types.INPUT_CONTACT_LASTNAME:
+          return action.payload.type ? { //If true we save in modal.activeObject.lastname else we save in input.name
+              ...state,
+              modal : {
+                  ...state.modal,
+                  activeObject : {
+                      ...state.modal.activeObject,
+                      lastname : action.payload.value
+                  }
+              }
+          } : {
+              ...state,
+              input: { ...state.input, lastname: action.payload.value }
+          };
+      case types.INPUT_CONTACT_DOB:
+          return action.payload.type ? { //If true we save in modal.activeObject.DOB else we save in input.name
+              ...state,
+              modal : {
+                  ...state.modal,
+                  activeObject : {
+                      ...state.modal.activeObject,
+                      DOB : action.payload.value
+                  }
+              }
+          } : {
+              ...state,
+              input: { ...state.input, DOB: action.payload.value }
+          };
     case types.INPUT_CONTACT_PHONENUMBER:
     return action.payload.type ? { //If true we save in modal.activeObject.phonenumber else we save in input.phonenumber
       ...state,
@@ -202,4 +238,8 @@ const manipulateData = (state, action) => {
 
 };
 
-const filterSearchResult = (data, searchParam) =>  data.filter(x => x.name.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 || (`${x.phonenumber}`).indexOf(searchParam) !== -1 );
+const filterSearchResult = (data, searchParam) =>
+    data.filter(x => x.name.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
+    x.lastname.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
+     x.DOB.indexOf(searchParam) !== -1 ||
+    (`${x.phonenumber}`).indexOf(searchParam) !== -1 )

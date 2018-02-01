@@ -53,8 +53,8 @@ app.put('/contacts', (req, res) => {
 
         if (error) throw error;
     });
-  else if (typeof req.body.name !== "undefined" && typeof req.body.tel_no !== "undefined")
-    connection.query(`UPDATE Contacts SET Name = '${req.body.name}', TelNo = '${req.body.tel_no}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
+  else if (typeof req.body.name !== "undefined" && typeof req.body.lastname !== "undefined" && typeof req.body.DOB !== "undefined" && typeof req.body.tel_no !== "undefined")
+    connection.query(`UPDATE Contacts SET Name = '${req.body.name}', lastname = '${req.body.lastname}', DOB = '${req.body.DOB}', TelNo = '${req.body.tel_no}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
 
         if (error) throw error;
@@ -69,9 +69,9 @@ app.put('/contacts', (req, res) => {
 
 app.post('/contact', (req, res) => {
   console.log("[POST] contact ")
-  connection.query(`INSERT INTO Contacts (Name, TelNo) VALUES( '${req.body.name}', '${req.body.tel_no}')`, function (error, results, fields) {
+  connection.query(`INSERT INTO Contacts (Name, lastname, DOB, TelNo) VALUES( '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}')`, function (error, results, fields) {
     res.send(results);
-    console.log("Inserted contact with ID = ", results.insertId);
+    // console.log("Inserted contact with ID = ", results.insertId);
 
     if (error) throw error;
   });

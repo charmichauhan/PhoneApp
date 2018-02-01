@@ -25,6 +25,18 @@ class CModalWindow extends React.Component {
           value={this.props.activeObject.name}
           onChange={(e) => this.props.actions.inputName(e.target.value, true)}/>
         <Input
+            ref="lastname"
+            type="text"
+            placeholder="lastName"
+            value={this.props.activeObject.lastname}
+            onChange={(e) => this.props.actions.inputlastName(e.target.value, true)}/>
+        <Input
+          ref="DOB"
+          type="text"
+          placeholder="DOB"
+          value={this.props.activeObject.DOB}
+          onChange={(e) => this.props.actions.inputDOB(e.target.value, true)}/>
+        <Input
           type="text"
           placeholder="Phonenumber"
           value={this.props.activeObject.phonenumber}
@@ -45,7 +57,7 @@ class CModalWindow extends React.Component {
     return (
       <ModalFooter>
         <Button color="danger" onClick={this.toggleNested} className="mr-auto">Delete contact</Button>
-        <Button disabled={this.props.activeObject.name.length < 2 || this.props.activeObject.phonenumber.length < 2} color="primary"
+        <Button disabled={this.props.activeObject.name.length < 2 || this.props.activeObject.lastname.length < 2 || this.props.activeObject.phonenumber.length < 10 || !new RegExp(/^\d+$/).test(this.props.input.phonenumber)} color="primary"
           onClick={() => {
         this.props.actions.update(this.props.activeId, this.props.activeObject);
         }}>Save changes</Button>{' '}

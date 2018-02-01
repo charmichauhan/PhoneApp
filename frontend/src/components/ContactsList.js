@@ -22,6 +22,7 @@ class ContactsList extends React.Component {
   }
 
   renderRows(data) {
+    debugger
     if (data.length > 0) {
       return data.map((x, i) => <ContactsListItem
         key={i}
@@ -36,7 +37,7 @@ class ContactsList extends React.Component {
   }
 
   fullTable() {
-
+  debugger
     let data = this.props.searched ? this.props.searchedData : this.props.data;
     const mappedFavorites = this.props.favorites.map(y => y.contactId);
 
@@ -49,11 +50,13 @@ class ContactsList extends React.Component {
 
     return (
 
-      <Table bordered className="thead-inverse">
+      <Table bordered id="customers">
         <thead>
           <tr>
             <th onClick={() => this._sort(SortColumns.ID)}>ID {this._sortHelper(SortColumns.ID)}</th>
             <th onClick={() => this._sort(SortColumns.NAME)}>Name {this._sortHelper(SortColumns.NAME)}</th>
+            <th onClick={() => this._sort(SortColumns.LASTNAME)}>LastName {this._sortHelper(SortColumns.LASTNAME)}</th>
+            <th onClick={() => this._sort(SortColumns.DOB)}>DOB {this._sortHelper(SortColumns.DOB)}</th>
             <th onClick={() => this._sort(SortColumns.PHONENUMBER)}>Phonenumber {this._sortHelper(SortColumns.PHONENUMBER)}</th>
             <th colSpan={2} className="text-center">Actions</th>
           </tr>
@@ -87,7 +90,6 @@ const mapStateToProps = (state) => {
     activeList: state.contacts.activeList,
     searchedData: state.contacts.searchedData,
     searched: state.contacts.searched,
-
     fetching: state.contacts.fetching,
     fetched: state.contacts.fetched,
     error: state.contacts.error

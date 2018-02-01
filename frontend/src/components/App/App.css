@@ -1,5 +1,5 @@
 .App-header {
-  background-color: #222;
+  background-color: #157ab5;
   padding: 20px;
   color: white;
   text-align: center;
@@ -33,6 +33,7 @@ table {
 
 td.action:hover {
   background-color: rgba(0, 0, 0, 0.075);
+  color:  #157ab5;
 }
 
 footer {
@@ -41,9 +42,33 @@ footer {
 
 footer a {
   opacity: 0.7;
-  color: #222 !important;
+  color: #157ab5 !important;
 }
 
 footer a:hover {
   opacity: 1;
+}
+
+#customers {
+  margin-top: 45px;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 75%;
+  margin-left: 10%;
+}
+
+#customers td , #customers th{
+  border: 1px solid #ddd;
+  padding: 15px;
+  line-height: 30px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th{
+  text-align: center;
+  background-color: #157ab5;
+  color: white;
 }

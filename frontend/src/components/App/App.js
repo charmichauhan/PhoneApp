@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React Phonebook</h1>
+          <h1 className="App-title">Welcome to  Phonebook App</h1>
         </header>
 
         <Container>
@@ -18,7 +18,8 @@ class App extends Component {
         </Container>
 
         <footer className="text-center">
-          <a href="https://github.com/arnaskro/react-phonebook" title="GitHub"><FontAwesome name="github" size="2x"/></a>
+            <p> Write for us FAQ's Helping Contact
+                © Copyright 2018. All Rights Reserved.</p>
         </footer>
       </div>
     );

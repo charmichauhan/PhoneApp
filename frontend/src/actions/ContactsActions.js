@@ -6,7 +6,9 @@ export const types = {
   REMOVE_CONTACT: 'REMOVE_CONTACT',
   UPDATE_CONTACT: 'UPDATE_CONTACT',
   INPUT_CONTACT_NAME: 'INPUT_CONTACT_NAME',
-  INPUT_CONTACT_PHONENUMBER: 'INPUT_CONTACT_PHONENUMBER',
+    INPUT_CONTACT_LASTNAME: 'INPUT_CONTACT_LASTNAME',
+    INPUT_CONTACT_DOB: 'INPUT_CONTACT_DOB',
+    INPUT_CONTACT_PHONENUMBER: 'INPUT_CONTACT_PHONENUMBER',
   INPUT_SEARCH_PARAM: 'INPUT_SEARCH_PARAM',
   CONTACTS_TOGGLE_SORT: 'CONTACTS_TOGGLE_SORT',
   TOGGLE_CONTACT_MODAL_STATE : 'TOGGLE_CONTACT_MODAL_STATE',
@@ -23,6 +25,8 @@ export const types = {
 export const SortColumns = {
   ID: "ID",
   NAME: "NAME",
+  LASTNAME: "LASTNAME",
+  DOB: "DOB",
   PHONENUMBER: "PHONENUMBER"
 };
 
@@ -62,14 +66,14 @@ export const sortByColumn = (column = SortColumns.ID) => {
   };
 };
 
-export const add = (id, name, phonenumber) => {
+export const add = (id, name, lastname, DOB, phonenumber) => {
   return function (dispatch) {
 
-    axios.post(API.CreateContactReqest(), { name: name, tel_no: phonenumber })
+    axios.post(API.CreateContactReqest(), { name: name, lastname: lastname, DOB: DOB, tel_no: phonenumber })
       .then(res => {
         dispatch({
           type: types.ADD_CONTACT,
-          payload: { id, name, phonenumber }
+          payload: { id, name, lastname, DOB, phonenumber }
         });
       })
       .catch(err => console.log(err.data))
@@ -92,7 +96,7 @@ export const remove = (id = -1) => {
 
 export const update = (id = -1, activeObject = {}) => {
   return function (dispatch) {
-    axios.put(API.UpdateContactReqest(), { name: activeObject.name, tel_no: activeObject.phonenumber,  id: id} )
+    axios.put(API.UpdateContactReqest(), { name: activeObject.name,  lastname: activeObject.lastname,  DOB: activeObject.DOB, tel_no: activeObject.phonenumber,  id: id} )
       .then(x => {
         dispatch({
           type: types.UPDATE_CONTACT,
@@ -105,11 +109,21 @@ export const update = (id = -1, activeObject = {}) => {
       .catch(err => console.log(err.data))
   };
 };
-
 export const inputName = (value = "", type = false) => {
+    return function (dispatch) {
+        dispatch({
+            type: types.INPUT_CONTACT_NAME,
+            payload: {
+                value: value,
+                type: type
+            }
+        });
+    };
+};
+export const inputlastName = (value = "", type = false) => {
   return function (dispatch) {
     dispatch({
-      type: types.INPUT_CONTACT_NAME,
+      type: types.INPUT_CONTACT_LASTNAME,
       payload: {
         value: value,
         type: type
@@ -117,7 +131,17 @@ export const inputName = (value = "", type = false) => {
     });
   };
 };
-
+export const inputDOB = (value = "", type = false) => {
+    return function (dispatch) {
+        dispatch({
+            type: types.INPUT_CONTACT_DOB,
+            payload: {
+                value: value,
+                type: type
+            }
+        });
+    };
+};
 export const inputPhonenumber = (value = "", type = false) => {
   return function (dispatch) {
     dispatch({

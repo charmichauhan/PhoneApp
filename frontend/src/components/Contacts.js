@@ -7,13 +7,12 @@ import {ListTypes} from '../actions/ContactsActions';
 
 import { Row, Col, Input, InputGroup, InputGroupButton, Button, ButtonGroup } from 'reactstrap';
 
-
 import ContactsList from './ContactsList';
 
 class Contacts extends React.Component {
 
     _onChange = (e) => {
-
+        debugger
       if (e.target.value) {
         this.props.actions.inputSearchParam(e.target.value)
         this.props.actions.filterSearchResult(e.target.value);
@@ -23,6 +22,7 @@ class Contacts extends React.Component {
       }};
 
     _totalContacts = () => {
+        debugger
       const mappedFavorites = this.props.favorites.map(y => y.contactId);
 
       let sum = this.props.searched ? //Is the data regular or searched
@@ -37,30 +37,43 @@ class Contacts extends React.Component {
     };
 
   render() {
-
+    debugger;
     return (
       <div>
         <br />
         <Row>
-          <Col xs="12">
+          <Col style={{marginLeft:'70px'}} xs="10">
             <InputGroup>
               <Input
                 ref="name"
                 type="text"
-                placeholder="Name"
+                placeholder="FirstName"
                 value={this.props.input.name}
                 onChange={(e) => this.props.actions.inputName(e.target.value)}/>
+                <Input
+                    ref="lastname"
+                    type="text"
+                    placeholder="LastName"
+                    value={this.props.input.lastname}
+                    onChange={(e) => this.props.actions.inputlastName(e.target.value)}/>
+                <Input
+                    ref="DOB"
+                    type="date"
+                    placeholder="DOB"
+                    value={this.props.input.DOB}
+                    onChange={(e) => this.props.actions.inputDOB(e.target.value)}/>
               <Input
                 type="text"
                 placeholder="Phonenumber"
                 value={this.props.input.phonenumber}
                 onChange={(e) => this.props.actions.inputPhonenumber(e.target.value)} />
+
               <InputGroupButton>
                 <Button
-                  disabled={this.props.input.name.length < 2 || this.props.input.phonenumber.length < 2 || !new RegExp(/^\d+$/).test(this.props.input.phonenumber)}
-                  color="success"
+                  disabled={this.props.input.name.length < 2 || this.props.input.lastname.length < 2 || this.props.input.phonenumber.length < 10 || !new RegExp(/^\d+$/).test(this.props.input.phonenumber)}
+                  color="primary"
                   onClick={() => {
-                   this.props.actions.add(this.props.data.length ? this.props.data[this.props.data.length-1].id+1 : 0, this.props.input.name, this.props.input.phonenumber);
+                   this.props.actions.add(this.props.data.length ? this.props.data[this.props.data.length-1].id+1 : 0, this.props.input.name, this.props.input.lastname, this.props.input.DOB, this.props.input.phonenumber);
                   }}>Add</Button>
               </InputGroupButton>
             </InputGroup>
@@ -85,8 +98,8 @@ class Contacts extends React.Component {
             <p className="text-muted"> You have <b>{this._totalContacts()}</b> contact(s).</p>
           </Col>
           <Col xs="12" md="6">
-            <ButtonGroup size="sm" className="float-right">
-              <Button onClick={() => this.props.actions.toggleListType(ListTypes.ALL)} color={this.props.activeList === ListTypes.ALL ? "dark" : "light" }>All</Button>
+            <ButtonGroup style={{paddingRight:'150px'}} size="sm" className="float-right">
+              <Button className="btn btn-primary" onClick={() => this.props.actions.toggleListType(ListTypes.ALL)} color={this.props.activeList === ListTypes.ALL ? "dark" : "light" }>All</Button>
               <Button onClick={() => this.props.actions.toggleListType(ListTypes.FAVORITES)} color={this.props.activeList === ListTypes.FAVORITES ? "dark" : "light" }>Favorites</Button>
             </ButtonGroup>
           </Col>
