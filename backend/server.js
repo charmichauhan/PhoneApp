@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Enable cross origin requests
-app.use(cors())
+app.use(cors());
 
 // Database
 const connection = mysql.createConnection({
@@ -38,7 +38,7 @@ app.get('/contacts', (req, res) => {
   console.log("[GET] contacts")
   connection.query('SELECT * FROM Contacts', function (error, results, fields) {
     res.send(results);
-
+    console.log(results)
     // Handle error after the release.
     if (error) throw error;
   });
@@ -50,12 +50,14 @@ app.put('/contacts', (req, res) => {
   if (typeof req.body.isFavorite !== "undefined")
     connection.query(`UPDATE Contacts SET isFavorite = '${req.body.isFavorite}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
+        console.log(results)
 
         if (error) throw error;
     });
   else if (typeof req.body.name !== "undefined" && typeof req.body.lastname !== "undefined" && typeof req.body.DOB !== "undefined" && typeof req.body.tel_no !== "undefined")
     connection.query(`UPDATE Contacts SET Name = '${req.body.name}', lastname = '${req.body.lastname}', DOB = '${req.body.DOB}', TelNo = '${req.body.tel_no}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
+        console.log(results)
 
         if (error) throw error;
     });
@@ -71,8 +73,7 @@ app.post('/contact', (req, res) => {
   console.log("[POST] contact ")
   connection.query(`INSERT INTO Contacts (Name, lastname, DOB, TelNo) VALUES( '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}')`, function (error, results, fields) {
     res.send(results);
-    // console.log("Inserted contact with ID = ", results.insertId);
-
+    console.log("Inserted contact with ID = ", results);
     if (error) throw error;
   });
 });
@@ -82,12 +83,13 @@ app.delete('/contact', (req, res) => {
   console.log("[DELETE] contact")
   connection.query(`DELETE FROM Contacts WHERE Id = '${req.body.id}'`, function (error, results, fields) {
     res.send(results);
+      console.log(results)
 
     if (error) throw error;
   });
 });
 
 // Start the server
-app.listen(8080, () => console.log('~ React-Phonebook server app listening on port 8080!'))
+app.listen(8080, () => console.log('Phonebook server app listening on port 8080'));
 
 // connection.end(); // End connection
