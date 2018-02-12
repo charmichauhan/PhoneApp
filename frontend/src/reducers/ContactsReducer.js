@@ -87,6 +87,7 @@ const manipulateData = (state, action) => {
       return {
         ...state,
         input: {
+          id:"",
           name: "",
             lastname: "",
             DOB: "",
@@ -239,7 +240,9 @@ const manipulateData = (state, action) => {
 };
 
 const filterSearchResult = (data, searchParam) =>
-    data.filter(x => x.name.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
+    data.filter(x =>
+    x.id.indexOf(searchParam) !== -1 ||
+    x.name.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
     x.lastname.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
      x.DOB.indexOf(searchParam) !== -1 ||
     (`${x.phonenumber}`).indexOf(searchParam) !== -1 )

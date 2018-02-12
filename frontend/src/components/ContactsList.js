@@ -22,7 +22,7 @@ class ContactsList extends React.Component {
   }
 
   renderRows(data) {
-    debugger
+    debugger;
     if (data.length > 0) {
       return data.map((x, i) => <ContactsListItem
         key={i}
@@ -70,6 +70,7 @@ class ContactsList extends React.Component {
   }
 
   componentWillMount() {
+    debugger
     if (!this.props.fetching && !this.props.fetched)
       this.props.actions.getContacts();
   }

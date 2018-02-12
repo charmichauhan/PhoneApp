@@ -10,9 +10,9 @@ app.use(cors());
 
 // Database
 const connection = mysql.createConnection({
-  host     : "reactpb.c3xcnkqal7bl.eu-central-1.rds.amazonaws.com",
-  user     : "reactpb",
-  password : "reactpb2018",
+  host     : "localhost",
+  user     : "root",
+  password : "root",
   port     : "3306",
   database : "reactpb"
 });
@@ -35,10 +35,10 @@ app.get('/', (req, res) => {
 // [GET] contacts
 app.get('/contacts', (req, res) => {
 
-  console.log("[GET] contacts")
+  console.log("[GET] contacts");
   connection.query('SELECT * FROM Contacts', function (error, results, fields) {
     res.send(results);
-    console.log(results)
+    console.log(results);
     // Handle error after the release.
     if (error) throw error;
   });
@@ -48,14 +48,14 @@ app.put('/contacts', (req, res) => {
   console.log('[PUT] contact');
 
   if (typeof req.body.isFavorite !== "undefined")
-    connection.query(`UPDATE Contacts SET isFavorite = '${req.body.isFavorite}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
+    connection.query(`UPDATE Contacts SET isFavorite = '${req.body.isFavorite}' WHERE Id =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
         console.log(results)
 
         if (error) throw error;
     });
-  else if (typeof req.body.name !== "undefined" && typeof req.body.lastname !== "undefined" && typeof req.body.DOB !== "undefined" && typeof req.body.tel_no !== "undefined")
-    connection.query(`UPDATE Contacts SET Name = '${req.body.name}', lastname = '${req.body.lastname}', DOB = '${req.body.DOB}', TelNo = '${req.body.tel_no}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
+  else if (typeof req.body.id !== "undefined" && typeof req.body.name !== "undefined" && typeof req.body.lastname !== "undefined" && typeof req.body.DOB !== "undefined" && typeof req.body.tel_no !== "undefined")
+    connection.query(`UPDATE Contacts SET Id = '${req.body.id}', Name = '${req.body.name}', lastname = '${req.body.lastname}', DOB = '${req.body.DOB}', TelNo = '${req.body.tel_no}' WHERE Id =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
         console.log(results)
 
@@ -71,7 +71,7 @@ app.put('/contacts', (req, res) => {
 
 app.post('/contact', (req, res) => {
   console.log("[POST] contact ")
-  connection.query(`INSERT INTO Contacts (Name, lastname, DOB, TelNo) VALUES( '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}')`, function (error, results, fields) {
+  connection.query(`INSERT INTO Contacts (Id, Name, lastname, DOB, TelNo) VALUES( '${req.body.id}', '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}')`, function (error, results, fields) {
     res.send(results);
     console.log("Inserted contact with ID = ", results);
     if (error) throw error;

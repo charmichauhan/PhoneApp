@@ -6,9 +6,9 @@ export const types = {
   REMOVE_CONTACT: 'REMOVE_CONTACT',
   UPDATE_CONTACT: 'UPDATE_CONTACT',
   INPUT_CONTACT_NAME: 'INPUT_CONTACT_NAME',
-    INPUT_CONTACT_LASTNAME: 'INPUT_CONTACT_LASTNAME',
-    INPUT_CONTACT_DOB: 'INPUT_CONTACT_DOB',
-    INPUT_CONTACT_PHONENUMBER: 'INPUT_CONTACT_PHONENUMBER',
+  INPUT_CONTACT_LASTNAME: 'INPUT_CONTACT_LASTNAME',
+  INPUT_CONTACT_DOB: 'INPUT_CONTACT_DOB',
+  INPUT_CONTACT_PHONENUMBER: 'INPUT_CONTACT_PHONENUMBER',
   INPUT_SEARCH_PARAM: 'INPUT_SEARCH_PARAM',
   CONTACTS_TOGGLE_SORT: 'CONTACTS_TOGGLE_SORT',
   TOGGLE_CONTACT_MODAL_STATE : 'TOGGLE_CONTACT_MODAL_STATE',
@@ -35,6 +35,7 @@ export const ListTypes = {
 };
 
 export const getContacts = () => {
+    debugger
   return function (dispatch) {
     dispatch({
       type: types.GET_CONTACTS_START
@@ -68,7 +69,7 @@ export const sortByColumn = (column = SortColumns.ID) => {
 export const add = (id, name, lastname, DOB, phonenumber) => {
   return function (dispatch) {
 
-    axios.post(API.CreateContactReqest(), { name: name, lastname: lastname, DOB: DOB, tel_no: phonenumber })
+    axios.post(API.CreateContactReqest(), { Id:id, name: name, lastname: lastname, DOB: DOB, TelNo: phonenumber })
       .then(res => {
         dispatch({
           type: types.ADD_CONTACT,
@@ -79,10 +80,10 @@ export const add = (id, name, lastname, DOB, phonenumber) => {
   };
 };
 
-export const remove = (id = -1) => {
+export const remove = (id) => {
   return function (dispatch) {
 
-    axios.delete(API.DeleteContactReqest(), { data: {id: id} })
+    axios.delete(API.DeleteContactReqest(), { data: {Id: id} })
       .then(x => {
         dispatch({
           type: types.REMOVE_CONTACT,
@@ -93,14 +94,14 @@ export const remove = (id = -1) => {
   };
 };
 
-export const update = (id = -1, activeObject = {}) => {
+export const update = (id, activeObject = {}) => {
   return function (dispatch) {
-    axios.put(API.UpdateContactReqest(), { name: activeObject.name,  lastname: activeObject.lastname,  DOB: activeObject.DOB, tel_no: activeObject.phonenumber,  id: id} )
+    axios.put(API.UpdateContactReqest(), { name: activeObject.name,  lastname: activeObject.lastname,  DOB: activeObject.DOB, tel_no: activeObject.phonenumber,  Id: id} )
       .then(x => {
         dispatch({
           type: types.UPDATE_CONTACT,
           payload: {
-            id: id,
+            Id: id,
             activeObject: activeObject
           }
         });
@@ -183,7 +184,7 @@ export const toggleNestedModal = (object = null) => {
   };
 };
 
-export const toggleFavorite = (contactId = -1, isFavorite) => {
+export const toggleFavorite = (contactId, isFavorite) => {
   return function (dispatch) {
 
     axios.put(API.UpdateContactReqest(), { id: contactId, isFavorite: isFavorite ? 0 : 1 })

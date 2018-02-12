@@ -18,8 +18,10 @@ class App extends Component {
         </Container>
 
         <footer className="text-center">
+            <p>Drop mail at <a>lanetteam.charmic@gmail.com</a> for any query...</p>
             <p> Write for us FAQ's Helping Contact
                 © Copyright 2018. All Rights Reserved.</p>
+            <p style={{float:'right'}}>Made by Charmi Chauhan</p>
         </footer>
       </div>
     );
