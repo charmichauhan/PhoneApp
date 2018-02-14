@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 app.get('/contacts', (req, res) => {
 
   console.log("[GET] contacts");
-  connection.query('SELECT ID, Name, lastname, DOB, TelNo FROM Contacts', function (error, results, fields) {
+  connection.query('SELECT ID, Name, lastname, DOB, TelNo, isFavorite FROM Contacts', function (error, results, fields) {
     res.send(results);
     console.log(results);
     // Handle error after the release.

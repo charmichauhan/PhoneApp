@@ -68,7 +68,7 @@ class Contacts extends React.Component {
 
               <InputGroupButton>
                 <Button
-                  disabled={this.props.input.name.length < 2 || this.props.input.lastname.length < 2 || !new RegExp(/^\d+$/).test(this.props.input.phonenumber)}
+                  disabled={this.props.input.name.length < 2 || this.props.input.lastname.length < 2 || this.props.activeObject.phonenumber.length < 10 ||  !new RegExp(/^\d+$/).test(this.props.input.phonenumber)}
                   color="primary"
                   onClick={() => {
                    this.props.actions.add(this.props.data.length ? this.props.data[this.props.data.length-1].id+1 : 0, this.props.input.name, this.props.input.lastname, this.props.input.DOB, this.props.input.phonenumber);
