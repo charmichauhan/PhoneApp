@@ -32,12 +32,12 @@ class CModalWindow extends React.Component {
             onChange={(e) => this.props.actions.inputlastName(e.target.value, true)}/>
         <Input
           ref="DOB"
-          type="text"
+          type="date"
           placeholder="DOB"
           value={this.props.activeObject.DOB}
           onChange={(e) => this.props.actions.inputDOB(e.target.value, true)}/>
         <Input
-          type="text"
+          type="number"
           placeholder="Phonenumber"
           value={this.props.activeObject.phonenumber}
           onChange={(e) => this.props.actions.inputPhonenumber(e.target.value, true)}/>

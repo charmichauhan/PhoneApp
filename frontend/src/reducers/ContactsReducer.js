@@ -66,13 +66,14 @@ const manipulateData = (state, action) => {
         error: null
       }
     case types.GET_CONTACTS_FINISHED:
+        debugger
       return {
         ...state,
-        data: action.payload.map((x) => new Contact(x.ID, x.Name, x.TelNo)),
+        data: action.payload.map((x) => new Contact(x.ID, x.Name, x.lastname, x.DOB, x.TelNo)),
         fetching: false,
         fetched: true,
         favorites: action.payload.filter(x => x.isFavorite === 1).map((x) => new FavoriteContact(x.ID))
-      }
+      };
     case types.GET_CONTACTS_ERROR:
       return {
         ...state,
@@ -87,8 +88,7 @@ const manipulateData = (state, action) => {
       return {
         ...state,
         input: {
-          id:"",
-          name: "",
+            name: "",
             lastname: "",
             DOB: "",
             phonenumber: ""
@@ -121,6 +121,20 @@ const manipulateData = (state, action) => {
           activeId : null,
           activeObject : new Contact()
         }
+      };
+    case types.INPUT_CONTACT_ID:
+      return action.payload.type ? { //If true we save in modal.activeObject.name else we save in input.name
+        ...state,
+        modal : {
+          ...state.modal,
+          activeObject : {
+            ...state.modal.activeObject,
+            id : action.payload.value
+          }
+        }
+      } : {
+        ...state,
+        input: { ...state.input, id: action.payload.value }
       };
     case types.INPUT_CONTACT_NAME:
       return action.payload.type ? { //If true we save in modal.activeObject.name else we save in input.name
@@ -201,7 +215,6 @@ const manipulateData = (state, action) => {
           isOpen: action.payload !== null,
           activeId: action.payload,
           activeObject: action.payload !== null ? state.data.filter(x => x.id === action.payload)[0] : new Contact()
-
         }
       };
       case types.TOGGLE_CONTACT_NESTED_MODAL_STATE:
@@ -241,8 +254,8 @@ const manipulateData = (state, action) => {
 
 const filterSearchResult = (data, searchParam) =>
     data.filter(x =>
-    x.id.indexOf(searchParam) !== -1 ||
+    // x.id.indexOf(searchParam) !== -1 ||
     x.name.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
     x.lastname.toLowerCase().indexOf(searchParam.toLowerCase()) !== -1 ||
-     x.DOB.indexOf(searchParam) !== -1 ||
-    (`${x.phonenumber}`).indexOf(searchParam) !== -1 )
+    x.DOB.indexOf(searchParam) !== -1 ||
+    x.phonenumber.indexOf(searchParam) !== -1 );

@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to  Phonebook App</h1>
+          <h1 className="App-title">Welcome to Phonebook App</h1>
         </header>
 
         <Container>
@@ -18,9 +18,8 @@ class App extends Component {
         </Container>
 
         <footer className="text-center">
-            <p>Drop mail at <a>lanetteam.charmic@gmail.com</a> for any query...</p>
-            <p> Write for us FAQ's Helping Contact
-                © Copyright 2018. All Rights Reserved.</p>
+            <p>Drop mail at <a href="https://gmail.com">lanetteam.charmic@gmail.com</a> for any query...</p>
+            <p> Write for us FAQ's Helping Contact © Copyright 2018. All Rights Reserved.</p>
             <p style={{float:'right'}}>Made by Charmi Chauhan</p>
         </footer>
       </div>

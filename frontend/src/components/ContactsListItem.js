@@ -4,6 +4,9 @@ import FontAwesome from 'react-fontawesome';
 export class ContactsListItem extends React.Component {
 
   render() {
+      debugger;
+      console.log('this.props.data',this.props.data);
+      console.log('this.props.data.id',this.props.data.id);
     return (
       <tr>
           <td>{this.props.data.id }</td>

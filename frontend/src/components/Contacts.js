@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CModalWindow from './shared/ModalWindow';
 import {ListTypes} from '../actions/ContactsActions';
-
 import { Row, Col, Input, InputGroup, InputGroupButton, Button, ButtonGroup } from 'reactstrap';
-
 import ContactsList from './ContactsList';
 
 class Contacts extends React.Component {
@@ -62,11 +60,11 @@ class Contacts extends React.Component {
                     placeholder="DOB"
                     value={this.props.input.DOB}
                     onChange={(e) => this.props.actions.inputDOB(e.target.value)}/>
-              <Input
-                type="text"
-                placeholder="Phonenumber"
-                value={this.props.input.phonenumber}
-                onChange={(e) => this.props.actions.inputPhonenumber(e.target.value)} />
+                 <Input
+                    type="text"
+                    placeholder="Phonenumber"
+                    value={this.props.input.phonenumber}
+                    onChange={(e) => this.props.actions.inputPhonenumber(e.target.value)} />
 
               <InputGroupButton>
                 <Button
@@ -93,9 +91,9 @@ class Contacts extends React.Component {
             <ContactsList />
           </Col>
         </Row>
-        <Row>
+        <Row >
           <Col xs="12" md="6">
-            <p className="text-muted"> You have <b>{this._totalContacts()}</b> contact(s).</p>
+            <p className="text-muted" style={{paddingLeft:'110px'}}> You have <b>{this._totalContacts()}</b> contact(s).</p>
           </Col>
           <Col xs="12" md="6">
             <ButtonGroup style={{paddingRight:'150px'}} size="sm" className="float-right">

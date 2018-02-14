@@ -1,3 +1,3 @@
-export default function FavoriteContact (contactId = -1) {
+export default function FavoriteContact (contactId = "") {
     this.contactId = contactId;
  }
