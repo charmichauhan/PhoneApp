@@ -6,25 +6,42 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ContactsListItem } from './ContactsListItem';
 import { ListTypes } from '../actions/ContactsActions';
-
 import { Table } from 'reactstrap';
 import Spinner from './Spinner';
 
 class ContactsList extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            currentPage: 1,
+            todosPerPage: 5
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
 
-  _sort(sortColumn) {
-    this.props.actions.sortByColumn(sortColumn)
-  }
-
-  _sortHelper(columnToCheck) {
-    if (this.props.sorting.column === columnToCheck)
-      return <FontAwesome name={this.props.sorting.asc ? 'sort-asc' : 'sort-desc'} />;
-  }
+    handleClick(event) {
+        this.setState({
+            currentPage: Number(event.target.id)
+        });
+    }
+    _sort(sortColumn) {
+      this.props.actions.sortByColumn(sortColumn)
+    }
+    _sortHelper(columnToCheck) {
+      if (this.props.sorting.column === columnToCheck)
+        return <FontAwesome name={this.props.sorting.asc ? 'sort-asc' : 'sort-desc'} />;
+    }
 
   renderRows(data) {
     debugger;
-    if (data.length > 0) {
-      return data.map((x, i) => <ContactsListItem
+      const { currentPage, todosPerPage } = this.state;
+      // Logic for displaying data
+      const indexOfLastTodo = currentPage * todosPerPage;
+      const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+      const currentTodos = data.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    if (currentTodos.length > 0) {
+      return currentTodos.map((x, i) => <ContactsListItem
         key={i}
         data={x}
         editFunction={() => this.props.actions.toggleModal(x.id)}
@@ -37,9 +54,28 @@ class ContactsList extends React.Component {
   }
 
   fullTable() {
-  debugger
+    debugger
+    const { todosPerPage } = this.state;
+
     let data = this.props.searched ? this.props.searchedData : this.props.data;
     const mappedFavorites = this.props.favorites.map(y => y.contactId);
+
+    // Logic for displaying page numbers
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(data.length / todosPerPage); i++) {
+        pageNumbers.push(i);
+    }
+    const renderPageNumbers = pageNumbers.map(number => {
+        return (
+            <li
+                key={number}
+                id={number}
+                onClick={this.handleClick}
+            >
+                {number}
+            </li>
+        );
+    });
 
     switch (this.props.activeList) {
       case ListTypes.FAVORITES:
@@ -47,10 +83,9 @@ class ContactsList extends React.Component {
         break;
       default: break;
     }
-
-    return (
-
-      <Table bordered id="customers">
+      return (
+        <div>
+          <Table bordered id="customers">
         <thead>
           <tr>
             <th onClick={() => this._sort(SortColumns.ID)}>ID {this._sortHelper(SortColumns.ID)}</th>
@@ -65,8 +100,13 @@ class ContactsList extends React.Component {
           {this.renderRows(data)}
         </tbody>
       </Table>
-
-    );
+          <li id="page-numbers">
+        {renderPageNumbers}
+    </li>
+          <br/>
+          <br/>
+        </div>
+  );
   }
 
   componentWillMount() {

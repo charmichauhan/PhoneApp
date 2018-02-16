@@ -25,6 +25,7 @@
     "redux-thunk": "^2.2.0"
   },
   "dependencies": {
-    "axios": "^0.17.1"
+    "axios": "^0.17.1",
+    "react-pagination-table": "^1.2.0"
   }
 }

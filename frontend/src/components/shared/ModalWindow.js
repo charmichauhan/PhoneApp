@@ -58,7 +58,7 @@ class CModalWindow extends React.Component {
       <ModalFooter>
         <Button color="danger" onClick={this.toggleNested} className="mr-auto">Delete contact</Button>
         <Button
-            disabled={this.props.activeObject.name.length < 2 || this.props.activeObject.lastname.length < 2 || this.props.activeObject.phonenumber.length < 10 || !new RegExp(/^\d+$/).test(this.props.input.phonenumber)}
+            disabled={this.props.activeObject.name.length < 2 || this.props.activeObject.lastname.length < 2 || this.props.activeObject.phonenumber.length < 10 || !new RegExp(/^\d+$/).test(this.props.activeObject.phonenumber)}
             color="primary"
           onClick={() => {
         this.props.actions.update(this.props.activeId, this.props.activeObject);

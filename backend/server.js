@@ -56,15 +56,6 @@ app.put('/contacts', (req, res) => {
     connection.query(`UPDATE Contacts SET Name = '${req.body.name}', lastname = '${req.body.lastname}', DOB = '${req.body.DOB}', TelNo = '${req.body.tel_no}' WHERE ID =' ${req.body.id}'`, (error, results, fields) => {
         res.send(results);
         console.log(results);
-        // if (rows.affectedRows) {
-        //     connection.query("SELECT * FROM Contacts WHERE id='" + rows.insertId + "' " + req.body.id, function (err, rows) {
-        //         if (!err && rows.length > 0) {
-        //             res.send(rows[0]);
-        //         } else {
-        //             res.send([]);
-        //         }
-        //     });
-        // }
         if (error) throw error;
     });
   else console.log("Whoops, something went wrong, check the request", req);
@@ -74,7 +65,7 @@ app.put('/contacts', (req, res) => {
 app.post('/contact', (req, res) => {
   console.log("[POST] contact ");
   console.log('req.body.id',req.body.id)
-  connection.query(`INSERT INTO Contacts (Name, lastname, DOB, TelNo) VALUES( '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}')`, function (error, results, fields) {
+  connection.query(`INSERT INTO Contacts (Name, lastname, DOB, TelNo, isFavorite) VALUES( '${req.body.name}','${req.body.lastname}','${req.body.DOB}', '${req.body.tel_no}', '0')`, function (error, results, fields) {
     res.send(results);
     console.log("Inserted contact with ID = ", results);
     if (error) throw error;
